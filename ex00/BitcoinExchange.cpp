@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:50:50 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/18 20:19:08 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/18 20:24:38 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,18 @@ void	BitcoinExchange(const char *argv) {
 // DATA
 
 void	fillMap(std::map<std::size_t, float> &data) {
+
 	(void)data;
+
 	// TODO fillMap
 }
 
 // INPUT
 
 void	readInput(std::stringstream &input, const char *argv) {
+
 	std::ifstream	buffer;
+
 	buffer.open(argv);
 	if ((buffer.rdstate() & std::ifstream::failbit) != 0 )
 		throw std::runtime_error ("\x1b[31mError: could not open file.\x1b[0m");
@@ -42,11 +46,11 @@ void	readInput(std::stringstream &input, const char *argv) {
 	buffer.close();
 }
 
-void	checkInput(std::stringstream &input)
-{
+void	checkInput(std::stringstream &input) {
+
 	std::string	line;
-	while (std::getline(input, line, '\n'))
-	{
+
+	while (std::getline(input, line, '\n')) {
 		std::cout << "'" <<  line << "'" << std::endl;
 	}
 }
