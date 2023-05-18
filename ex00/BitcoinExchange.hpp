@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:53:05 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/18 18:57:27 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:56:16 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@
 #include <map>
 #include <exception>
 
-void	BitcoinExchange(const char *input);
+void	BitcoinExchange(const char *argv);
 
-// parsing
-void	fillMap(std::map<std::size_t, float> &data, const char *argv);
+// PARSING
+void	fillMap(std::map<std::size_t, float> &data);
 
+void	readInput(std::stringstream &input, const char *argv);
+void	checkInput(std::stringstream &input);
 #endif
