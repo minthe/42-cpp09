@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:53:05 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/18 19:56:16 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/18 20:17:53 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <map>
 #include <exception>
