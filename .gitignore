@@ -34,3 +34,5 @@
 .vscode
 .DS_Store
 program.dSYM
+*.txt
+*.csv
