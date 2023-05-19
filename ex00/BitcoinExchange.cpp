@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:50:50 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/19 03:14:07 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/19 12:43:57 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ void	BitcoinExchange(const char *argv) {
 	while (std::getline(input, line, '\n')) {
 		if (checkInputLine(line))
 		{
+			serializedDate(line.substr(0,10));
 			// TODO case 0: if no previous date is found... <2009
 			// TODO calculation
-			std::cout << "'" <<  line << "' -> value: " << atof(line.substr(13,(line.length()-13)).c_str()) << std::endl; // DEBUG print
+			std::cout << "'" << std::fixed << std::setprecision(-std::log10((float)atof(line.substr(13,(line.length()-13)).c_str())) + 1) << line << "' -> value: " << (float)atof(line.substr(13,(line.length()-13)).c_str()) << std::endl; // DEBUG print
 		}
 	}
 }
@@ -78,12 +79,11 @@ static bool is_float_literal(const char* token) {
 static bool is_valid_number(const std::string token) {
 	double	value;
 	value = atof(token.c_str());
+	if (value == 0) {
+		std::cout << "Error: not a positive number." << std::endl; // Error case 2
+		return false; }
 	if (value > 1000) {
 		std::cout << "Error: too large number." << std::endl; // Error case 3
-		return false; }
-	// TODO check if in Float range -> protect 1000.00000000000001
-	else if (value == 0 || token.at(0) == '-') {
-		std::cout << "Error: not a positive number." << std::endl; // Error case 2
 		return false; }
 	return true;
 }
@@ -109,13 +109,20 @@ bool	checkInputLine(const std::string line) {
 	if (line.empty())
 		return false;
 	else if (!is_valid_line(line)) {
-		std::cout << "Error: bad input => \"" << line << "\"" << std::endl; // Error case 3 TODO quotes not equal to output from subject
+		std::cout << "Error: bad input => " << line << std::endl; // Error case 3
 		return false; }
 	else if (line.c_str()[13] == '-') {
 		std::cout << "Error: not a positive number." << std::endl; // Error case 2
 		return false; }
 	else if (!is_valid_number(line.substr(13,(line.length()-13))))
 		return false;
-	// TODO check for valid date
 	return true;
+}
+
+size_t	serializedDate(const std::string line) {
+	const size_t	year = atoi(line.substr(0,4).c_str());
+	const size_t	month = atoi(line.substr(5,2).c_str());
+	const size_t	day = atoi(line.substr(8,2).c_str());
+	std::cout << "TEST DATE: " << year << month << day << std::endl;
+	return 1;
 }
