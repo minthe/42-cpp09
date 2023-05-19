@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:50:50 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/19 19:23:26 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/19 19:31:49 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,8 @@ bool	check_input_line(const std::string line) {
 
 size_t	serialize_date(const std::string line) {
 	std::string _line = line;
-	_line.erase(std::remove(_line.begin(), _line.end(), '-'), _line.end());
+	_line.erase(4, 1);
+	_line.erase(6, 1);
 	const size_t date = atoi(_line.c_str());
 	return date;
 }
