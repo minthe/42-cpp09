@@ -6,11 +6,12 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:50:50 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/19 02:24:07 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/19 03:14:07 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
+#include <sys/_types/_size_t.h>
 
 void	BitcoinExchange(const char *argv) {
 	std::map<std::size_t, float>	data;
@@ -61,20 +62,28 @@ static bool no_whitespace(const char* token) {
 
 static bool is_float_literal(const char* token) {
 	size_t dots = 0;
+	if (*token == '-')
+		token++;
 	while (*token) {
 		if (*token == '.')
 			dots++;
 		if ((!std::isdigit(*token) && *token != '.') || dots > 1)
 			return false;
 		token++; }
+	if (*--token == '.')
+		return false;
 	return true;
 }
 
 static bool is_valid_number(const std::string token) {
-	double value;
+	double	value;
 	value = atof(token.c_str());
 	if (value > 1000) {
 		std::cout << "Error: too large number." << std::endl; // Error case 3
+		return false; }
+	// TODO check if in Float range -> protect 1000.00000000000001
+	else if (value == 0 || token.at(0) == '-') {
+		std::cout << "Error: not a positive number." << std::endl; // Error case 2
 		return false; }
 	return true;
 }
@@ -90,9 +99,9 @@ static bool is_valid_line(const std::string line) {
 		line.at(12) != ' ') // delimiters
 		return false;
 	if (!no_whitespace(line.substr(13,(line.length()-13)).c_str()))
-		std::cout << "Error: bad input => " << line << std::endl; // Error case 3
+		return false;
 	if (!is_float_literal(line.substr(13,(line.length()-13)).c_str()))
-		std::cout << "Error: bad input => " << line << std::endl; // Error case 3
+		return false;
 	return true;
 }
 
@@ -100,9 +109,9 @@ bool	checkInputLine(const std::string line) {
 	if (line.empty())
 		return false;
 	else if (!is_valid_line(line)) {
-		std::cout << "Error: bad input => " << line << std::endl; // Error case 3
+		std::cout << "Error: bad input => \"" << line << "\"" << std::endl; // Error case 3 TODO quotes not equal to output from subject
 		return false; }
-	else if (line.at(13) == '-') {
+	else if (line.c_str()[13] == '-') {
 		std::cout << "Error: not a positive number." << std::endl; // Error case 2
 		return false; }
 	else if (!is_valid_number(line.substr(13,(line.length()-13))))
