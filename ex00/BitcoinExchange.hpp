@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:53:05 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/19 19:29:24 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/19 20:12:25 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <exception>
 #include <cctype>
 #include <cmath>
+#include <iomanip>
 
 #define DATABASE "data.csv"
 #define RED "\x1b[31m"

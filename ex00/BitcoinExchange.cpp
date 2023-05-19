@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:50:50 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/19 19:31:49 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/19 20:14:48 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,17 @@ std::size_t	BitcoinExchange(const char *argv) {
 			if (it->first != date && it != data.begin())
 				--it;
 			double	result = it->second * value;
-			std::cout << date << " => " << value << " = " << result << std::endl; // DEBUG print
+			double threshold = 1.0e6;
+			if (std::abs(result) >= threshold)
+			{
+				std::cout << date << " => " << value << " = ";
+				if (std::floor(result) == result)
+					std::cout << std::fixed << std::setprecision(0) << result << std::endl;
+				else
+					std::cout << std::fixed << std::setprecision(2) << result << std::endl;
+			}
+			else
+				std::cout << date << " => " << value << " = " << result << std::endl;
 		}
 		counter++;
 	}
