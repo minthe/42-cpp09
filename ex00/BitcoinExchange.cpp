@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:50:50 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/19 12:43:57 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/19 15:31:50 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ void	BitcoinExchange(const char *argv) {
 	if (std::getline(input, line, '\n') && line != "date | value")
 		throw std::runtime_error ("\x1b[31mError: invalid input on line 1.\x1b[0m");
 	while (std::getline(input, line, '\n')) {
-		if (checkInputLine(line))
+		if (check_input_line(line))
 		{
-			serializedDate(line.substr(0,10));
+			// serialize_date(line.substr(0,10));
 			// TODO case 0: if no previous date is found... <2009
 			// TODO calculation
-			std::cout << "'" << std::fixed << std::setprecision(-std::log10((float)atof(line.substr(13,(line.length()-13)).c_str())) + 1) << line << "' -> value: " << (float)atof(line.substr(13,(line.length()-13)).c_str()) << std::endl; // DEBUG print
+			std::cout << "'" << std::fixed << std::setprecision(-std::log10((float)atof(line.substr(13,(line.length()-13)).c_str())) + 1) << line << "' -> value: " << serialize_date(line.substr(0,10)) << std::endl; // DEBUG print
 		}
 	}
 }
@@ -88,6 +88,30 @@ static bool is_valid_number(const std::string token) {
 	return true;
 }
 
+static bool is_gap_year(const size_t y)
+{
+	if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0)
+		return true;
+	return false;
+}
+
+static bool	check_date(const std::string line)
+{
+	const size_t	y = atoi(line.substr(0,4).c_str());
+	const size_t	m = atoi(line.substr(5,2).c_str());
+	const size_t	d = atoi(line.substr(8,2).c_str());
+
+	if (y < 2009 || m < 1 || m > 12 || d < 1 || d > 31) // bounds
+		return false;
+	if (!is_gap_year(y) && d > 28)  // Gap Years
+		return false;
+	if ((m == 4 || m == 6 || m == 9 || m == 11) && d > 30) // month with 31 days
+		return false;
+	if (serialize_date(line) < (size_t)20090102) // bitcoin start date
+		return false;
+	return true;
+}
+
 static bool is_valid_line(const std::string line) {
 	if (line.length() < 14)
 		return false;
@@ -102,10 +126,12 @@ static bool is_valid_line(const std::string line) {
 		return false;
 	if (!is_float_literal(line.substr(13,(line.length()-13)).c_str()))
 		return false;
+	if (!check_date(line))
+		return false;
 	return true;
 }
 
-bool	checkInputLine(const std::string line) {
+bool	check_input_line(const std::string line) {
 	if (line.empty())
 		return false;
 	else if (!is_valid_line(line)) {
@@ -119,10 +145,9 @@ bool	checkInputLine(const std::string line) {
 	return true;
 }
 
-size_t	serializedDate(const std::string line) {
-	const size_t	year = atoi(line.substr(0,4).c_str());
-	const size_t	month = atoi(line.substr(5,2).c_str());
-	const size_t	day = atoi(line.substr(8,2).c_str());
-	std::cout << "TEST DATE: " << year << month << day << std::endl;
-	return 1;
+size_t	serialize_date(const std::string line) {
+	std::string _line = line;
+	_line.erase(std::remove(_line.begin(), _line.end(), '-'), _line.end());
+	const size_t date = atoi(_line.c_str());
+	return date;
 }
