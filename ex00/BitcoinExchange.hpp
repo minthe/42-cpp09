@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:53:05 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/18 23:52:21 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/19 00:26:38 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <string>
 #include <map>
 #include <exception>
+#include <cctype>
 
 void	BitcoinExchange(const char *argv);
 
