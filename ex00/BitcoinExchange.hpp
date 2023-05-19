@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:53:05 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/19 00:26:38 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/19 02:24:43 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@
 #include <cctype>
 
 void	BitcoinExchange(const char *argv);
-
 bool	checkInputLine(std::string line);
+
 #endif
