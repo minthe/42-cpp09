@@ -6,18 +6,20 @@
 /*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:50:50 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/19 15:31:50 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/19 19:23:26 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
-#include <sys/_types/_size_t.h>
 
-void	BitcoinExchange(const char *argv) {
-	std::map<std::size_t, float>	data;
+std::size_t	BitcoinExchange(const char *argv) {
+	std::map<std::size_t, double>	data;
 	std::ifstream					buffer;
 	std::stringstream				input;
+	std::stringstream				input_db;
 	std::string						line;
+	std::string						line_db;
+	std::size_t						counter = 0;
 	
 // open input
 	buffer.open(argv);
@@ -27,9 +29,27 @@ void	BitcoinExchange(const char *argv) {
 	buffer.close();
 	if (input.rdbuf()->str().empty())
 		throw std::runtime_error ("\x1b[31mError: empty input file.\x1b[0m");
-
+	
 // fill the map with data
-	// TODO fill map
+	buffer.open(DATABASE);
+	if ((buffer.rdstate() & std::ifstream::failbit) != 0 )
+		throw std::runtime_error ("\x1b[31mError: could not open database.\x1b[0m");
+	input_db << buffer.rdbuf();
+	buffer.close();
+	if (input_db.rdbuf()->str().empty())
+		throw std::runtime_error ("\x1b[31mError: empty database file.\x1b[0m");
+	std::getline(input_db, line_db);
+	if (line_db != "date,exchange_rate")
+		throw std::runtime_error ("\x1b[31mError: invalid database file.\x1b[0m");
+	while (std::getline(input_db, line_db, '\n'))
+	{
+		std::string	token1, token2;
+		std::stringstream line_temp(line_db);
+
+		std::getline(line_temp, token1, ',');
+		std::getline(line_temp, token2, ',');
+		data.insert(std::make_pair(serialize_date(token1), atof(token2.c_str()))); // https://en.cppreference.com/w/cpp/utility/pair/make_pair
+	}
 
 // parse input and calculate result
 	if (std::getline(input, line, '\n') && line != "date | value")
@@ -37,12 +57,17 @@ void	BitcoinExchange(const char *argv) {
 	while (std::getline(input, line, '\n')) {
 		if (check_input_line(line))
 		{
-			// serialize_date(line.substr(0,10));
-			// TODO case 0: if no previous date is found... <2009
-			// TODO calculation
-			std::cout << "'" << std::fixed << std::setprecision(-std::log10((float)atof(line.substr(13,(line.length()-13)).c_str())) + 1) << line << "' -> value: " << serialize_date(line.substr(0,10)) << std::endl; // DEBUG print
+			size_t	date = serialize_date(line.substr(0,10));
+			double	value = atof(line.substr(13,(line.length()-13)).c_str());
+			std::map<size_t, double>::iterator it = data.lower_bound(date);
+			if (it->first != date && it != data.begin())
+				--it;
+			double	result = it->second * value;
+			std::cout << date << " => " << value << " = " << result << std::endl; // DEBUG print
 		}
+		counter++;
 	}
+	return counter;
 }
 
 static bool only_digits(const char* token) {
@@ -79,18 +104,18 @@ static bool is_float_literal(const char* token) {
 static bool is_valid_number(const std::string token) {
 	double	value;
 	value = atof(token.c_str());
-	if (value == 0) {
-		std::cout << "Error: not a positive number." << std::endl; // Error case 2
-		return false; }
+	// if (value == 0) { // optional
+	// 	std::cout << "Error: not a positive number." << std::endl; // Error case 2
+	// 	return false; }
 	if (value > 1000) {
-		std::cout << "Error: too large number." << std::endl; // Error case 3
+		std::cout << RED << "Error: too large a number." << RESET << std::endl; // Error case 3
 		return false; }
 	return true;
 }
 
 static bool is_gap_year(const size_t y)
 {
-	if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0)
+	if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0) // https://www.kalenderpedia.de/schaltjahre.html
 		return true;
 	return false;
 }
@@ -103,7 +128,7 @@ static bool	check_date(const std::string line)
 
 	if (y < 2009 || m < 1 || m > 12 || d < 1 || d > 31) // bounds
 		return false;
-	if (!is_gap_year(y) && d > 28)  // Gap Years
+	if (m == 2 && (!is_gap_year(y) && d > 28))  // Gap Years
 		return false;
 	if ((m == 4 || m == 6 || m == 9 || m == 11) && d > 30) // month with 31 days
 		return false;
@@ -135,10 +160,10 @@ bool	check_input_line(const std::string line) {
 	if (line.empty())
 		return false;
 	else if (!is_valid_line(line)) {
-		std::cout << "Error: bad input => " << line << std::endl; // Error case 3
+		std::cout << RED <<  "Error: bad input => " << line << RESET << std::endl; // Error case 3
 		return false; }
 	else if (line.c_str()[13] == '-') {
-		std::cout << "Error: not a positive number." << std::endl; // Error case 2
+		std::cout << RED << "Error: not a positive number." << RESET << std::endl; // Error case 2
 		return false; }
 	else if (!is_valid_number(line.substr(13,(line.length()-13))))
 		return false;

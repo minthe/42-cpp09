@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:54:46 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/18 17:31:40 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:17:38 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 #include <exception>
 #include <iostream>
 #include <stdexcept>
-
-#define RED "\x1b[31m"
-#define RESET "\x1b[0m"
 
 int	main(int argc, char **argv)
 {
@@ -26,7 +23,8 @@ int	main(int argc, char **argv)
 	}
 	try
 	{
-		BitcoinExchange(argv[1]);	
+		if (!BitcoinExchange(argv[1]))
+			std::cerr << RED << "no lines to process" << RESET << std::endl;
 	}
 	catch (std::exception& e)
 	{
