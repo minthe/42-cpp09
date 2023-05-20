@@ -6,13 +6,11 @@
 /*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:36:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/20 20:23:06 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/20 20:26:30 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
-#include <cctype>
-
 
 int	pmerge_me(char **argv)
 {
@@ -39,4 +37,5 @@ void validate(char **argv)
 	if (sorted)
 		exit (print_msg("Execution stopped: input already sorted", 0));
 	// print_msg(sorted, 0); // DEBUG
+	return ;
 }
