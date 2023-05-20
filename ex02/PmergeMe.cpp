@@ -15,8 +15,11 @@
 int	pmerge_me(char **argv)
 {
 	validate(argv);
-	std::vector<int> test;
-	sort<std::vector<int>>(test);
+	std::vector<int>	sort_vector;
+	std::deque<int>		sort_deque;
+	
+
+	sort<std::vector<int> >(sort_vector);
 	return 0;
 }
 

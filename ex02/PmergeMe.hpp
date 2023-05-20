@@ -19,6 +19,10 @@
 
 #include <iostream>
 #include <vector>
+#include <deque>
+#include <time.h>
+
+
 
 int		pmerge_me(char **argv);
 void	validate(char **argv);
@@ -26,8 +30,11 @@ void	validate(char **argv);
 template<typename T>
 void	sort(T& container)
 {
-	
+	time_t	start = time(NULL);
 }
+
+// template<typename T>
+// double	
 
 template<typename T>
 int		print_msg(const T& message, const int fd)
