@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:36:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/21 11:54:00 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/21 15:34:05 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	pmerge_me(char **argv)
 	std::vector<int>	sort_vector;
 	std::vector<int>	sort_vector_print;
 	std::deque<int>		sort_deque;
-	std::list<int>		sort_list;
 	
 	// vector vs. deque
 	sort(sort_vector_print, argv);
-	print_container(sort_vector_print);
+	double dur = print_container(sort_vector_print);
+	std::cout << dur << std::endl;
 	
 	// double				result_vector = run_benchmark<std::vector<int> >(sort_vector, argv);
 	// double				result_deque = run_benchmark<std::list<int> >(sort_list, argv);
