@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:36:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/21 19:21:32 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:37:30 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	pmerge_me(char **argv)
 	double		result_vector = run_benchmark<std::vector<int> >(sort_vector, argv);
 	double		result_deque = run_benchmark<std::deque<int> >(sort_deque, argv);
 
-	std::cout << "Time to process a range of " << sort_vector_print.size() << " elements with std::vector<int> : " << std::fixed << std::setprecision(6) << result_vector << " us" << std::endl;
+	std::cout << "Time to process a range of " << sort_vector_print.size() << " elements with std::vector<int> : " << result_vector << " us" << std::endl;
 	std::cout << "Time to process a range of " << sort_vector_print.size() << " elements with std::deque<int> : " << result_deque << " us" << std::endl;
 
 	return 0;

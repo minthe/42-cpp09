@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:36:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/21 20:26:11 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:36:49 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <typeinfo>
 #include <sys/time.h>
 #include <iomanip>
+#include <stdlib.h>
 
 #define RED "\x1b[31m"
 #define YELLOW "\x1b[33m"

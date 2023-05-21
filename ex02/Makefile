@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+         #
+#    By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/20 17:31:06 by vfuhlenb          #+#    #+#              #
-#    Updated: 2023/05/20 17:36:37 by vfuhlenb         ###   ########.fr        #
+#    Updated: 2023/05/21 18:37:00 by vfuhlenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
