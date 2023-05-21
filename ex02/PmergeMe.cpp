@@ -6,31 +6,57 @@
 /*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:36:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/21 15:34:05 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/21 19:21:32 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
+static void print_unsorted(char **argv)
+{
+	int counter = 0;
+	for (++argv ; *argv; ++argv)
+	{
+		if (counter > AMOUNT)
+		{
+			std::cout << " [...]" << std::endl;
+			return ;
+		}	
+		std::cout << " " << *argv;
+		counter++;
+	}
+	std::cout << std::endl;
+}
+
 int	pmerge_me(char **argv)
 {
 	validate(argv);
 	std::vector<int>	sort_vector;
-	std::vector<int>	sort_vector_print;
 	std::deque<int>		sort_deque;
+	std::vector<int>	sort_vector_print;
 	
 	// vector vs. deque
+	std::cout << "Before:";
+	print_unsorted(argv);
 	sort(sort_vector_print, argv);
-	double dur = print_container(sort_vector_print);
-	std::cout << dur << std::endl;
-	
-	// double				result_vector = run_benchmark<std::vector<int> >(sort_vector, argv);
-	// double				result_deque = run_benchmark<std::list<int> >(sort_list, argv);
+	std::cout << "After:";
+	print_container(sort_vector_print, AMOUNT);
+	std::cout << std::endl;
+	double		result_vector = run_benchmark<std::vector<int> >(sort_vector, argv);
+	double		result_deque = run_benchmark<std::deque<int> >(sort_deque, argv);
 
-	// std::cout << "vector: " << std::fixed << result_vector << std::endl;
-	// std::cout << "deque: " << std::fixed << result_deque << std::endl;
+	std::cout << "Time to process a range of " << sort_vector_print.size() << " elements with std::vector<int> : " << std::fixed << std::setprecision(6) << result_vector << " us" << std::endl;
+	std::cout << "Time to process a range of " << sort_vector_print.size() << " elements with std::deque<int> : " << result_deque << " us" << std::endl;
 
 	return 0;
+}
+
+static bool only_digits(const char* token) {
+	while (*token) {
+		if (!std::isdigit(*token))
+			return false;
+		token++; }
+	return true;
 }
 
 void validate(char **argv)
@@ -41,7 +67,7 @@ void validate(char **argv)
 		double value = atof(argv[i]);
 		if (value < 0)
 			exit (print_msg("Error: negative value", 0));
-		if (!isdigit(*argv[i]) || value > 2147483647)
+		if (!only_digits(argv[i]) || value > 2147483647)
 			exit (print_msg("Error: non-integer value", 0));
 		if (argv[i + 1] && atof(argv[i]) > atof(argv[i + 1]))
 			sorted = false;
