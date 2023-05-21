@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:36:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/21 18:37:30 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/21 20:49:21 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	pmerge_me(char **argv)
 	sort(sort_vector_print, argv);
 	std::cout << "After:";
 	print_container(sort_vector_print, AMOUNT);
-	std::cout << std::endl;
+	// std::cout << std::endl;
 	double		result_vector = run_benchmark<std::vector<int> >(sort_vector, argv);
 	double		result_deque = run_benchmark<std::deque<int> >(sort_deque, argv);
 
