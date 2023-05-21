@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: vfuhlenb <vfuhlenb@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:36:56 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/05/21 08:18:05 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/05/21 09:44:26 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,14 @@ int	pmerge_me(char **argv)
 {
 	validate(argv);
 	std::vector<int>	sort_vector;
+	std::vector<int>	sort_vector_print;
 	std::deque<int>		sort_deque;
 	
-	std::cout << "vector: " << std::fixed << run_sort<std::vector<int> >(sort_vector) << std::endl;
-	std::cout << "deque: " << std::fixed << run_sort<std::deque<int> >(sort_deque) << std::endl;
+	double				result_vector = run_benchmark<std::vector<int> >(sort_vector, argv);
+	double				result_deque = run_benchmark<std::deque<int> >(sort_deque, argv);
+	
+	std::cout << "vector: " << std::fixed << result_vector << std::endl;
+	std::cout << "deque: " << std::fixed << result_deque << std::endl;
 
 	return 0;
 }
